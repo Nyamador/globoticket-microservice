@@ -1,0 +1,29 @@
+{
+  "name": "globoticket",
+  "version": "1.0.0",
+  "description": "An event management microservice",
+  "main": "index.js",
+  "repository": "https://github.com/Nyamador/globoticket",
+  "author": "Desmond Nyamador",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "auth": "yarn workspace auth start:dev",
+    "bookings": "yarn workspace bookings start:dev",
+    "events": "yarn workspace events start:dev",
+    "web": "yarn workspace web dev",
+    "dev": "yarn concurrently -n bookings,events,auth,web -c red,green,blue,yellow \"yarn bookings\" \"yarn events\" \"yarn auth\" \"yarn web\""
+  },
+  "workspaces": [
+    "lib/*",
+    "apps/*",
+    "shared/*"
+  ],
+  "dependencies": {
+    "faker": "^6.6.6"
+  },
+  "devDependencies": {
+    "@types/faker": "^6.6.9",
+    "concurrently": "^8.2.2"
+  }
+}

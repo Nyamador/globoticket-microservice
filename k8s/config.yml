@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-map
+data:
+  bookings-url: http://bookings-service.default.svc.cluster.local:3000/
+  events-url: http://event-catalog-service.default.svc.cluster.local:3000/
+  web-url: http://web-service.default.svc.cluster.local:3000/

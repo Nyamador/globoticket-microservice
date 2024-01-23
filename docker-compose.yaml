@@ -1,0 +1,20 @@
+version: "2.4"
+
+services:
+  bookings:
+    image: me-central1-docker.pkg.dev/globomantics-globoticket/globoticket/bookings
+    build:
+      context: ./apps/bookings
+      dockerfile: Dockerfile
+
+  event-catalog:
+    image: me-central1-docker.pkg.dev/globomantics-globoticket/globoticket/events
+    build:
+      context: ./apps/events
+      dockerfile: Dockerfile
+
+  web:
+    image: me-central1-docker.pkg.dev/globomantics-globoticket/globoticket/web
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile

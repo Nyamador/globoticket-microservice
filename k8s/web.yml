@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: me-central1-docker.pkg.dev/globomantics-globoticket/globoticket/web
+          ports:
+            - containerPort: 3000
+              name: web-port
+          env:
+            - name: BOOKINGS_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: bookings-url
+            - name: EVENTS_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: events-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: web
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: web-port
+  type: LoadBalancer

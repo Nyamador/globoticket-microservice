@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     
+  description String?
+  date        DateTime
+  location    String
+  organizerId String
+  imageURL    String?
+  organizer   Organizer  @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([slug, organizerId])
+}
+
+model Organizer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  events    Event[]  @relation("OrganizerEvents")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

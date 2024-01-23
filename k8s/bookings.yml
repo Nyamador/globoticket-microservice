@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookings-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bookings
+  template:
+    metadata:
+      labels:
+        app: bookings
+    spec:
+      containers:
+        - name: bookings
+          image: me-central1-docker.pkg.dev/globomantics-globoticket/globoticket/bookings
+          ports:
+            - containerPort: 3000
+              name: bookings-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookings-service
+spec:
+  selector:
+    app: bookings
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: bookings-port
+  type: LoadBalancer
