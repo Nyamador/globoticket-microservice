@@ -14,45 +14,6 @@ export class EventsService {
   }
 
   async getAllEvents() {
-    // // Function to generate a random date within the next 30 days
-    // const generateRandomDate = () => {
-    //   const currentDate = new Date();
-    //   const futureDate = new Date(
-    //     currentDate.getTime() + Math.random() * 30 * 24 * 60 * 60 * 1000,
-    //   );
-    //   return futureDate.toISOString();
-    // };
-
-    // // Generate 8 events
-    // const generateEvents = () => {
-    //   const events = [];
-
-    //   for (let i = 1; i <= 10; i++) {
-    //     const event = {
-    //       id: faker.string.uuid(),
-    //       name: `Event ${i}`,
-    //       slug: `event-${i}`,
-    //       description: faker.lorem.sentence(),
-    //       date: generateRandomDate(),
-    //       location: faker.location.city(),
-    //       organizerId: 'dbc61e44-3952-4c21-a008-e7e7b8e98048',
-    //       imageURL: faker.image.url(),
-    //       createdAt: new Date().toISOString(),
-    //       updatedAt: new Date().toISOString(),
-    //     };
-
-    //     events.push(event);
-    //   }
-
-    //   return events;
-    // };
-
-    // Display the generated events
-    // const events = generateEvents();
-    // console.log(JSON.stringify(events, null, 2));
-    // return events;
-    // return await this.prisma.event.createMany({ data: events });
-
     return await this.prisma.event.findMany();
   }
 

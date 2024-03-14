@@ -16,6 +16,8 @@ export class EventsController {
 
   @Get()
   async getAllEvents() {
+    // add artificial delay
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     return await this.eventsService.getAllEvents();
   }
 

@@ -1,11 +1,11 @@
-import Image from "next/image"
+import axios, { AxiosError } from "axios"
 import { Inter } from "next/font/google"
+import { toast } from "sonner"
 
 const inter = Inter({ subsets: ["latin"] })
 
 import EventListCard from "@/components/EventListCard"
 import { Event } from "@/lib/types"
-import useSWR from "swr"
 
 export default function Home({ events }: { events: Event[] }) {
   return (
@@ -30,16 +30,22 @@ export async function getServerSideProps() {
   const url = `${eventsService}/events`
 
   try {
-    const res = await fetch(url)
-    const events: Event[] = await res.json()
+    const { data } = await axios.get(url, {
+      timeout: 5000,
+    })
 
     return {
       props: {
-        events,
+        events: data,
       },
     }
-  } catch (error) {
-    console.error("Error fetching events:", error)
+  } catch (error: Error | AxiosError | any) {
+    if (error.code === "ECONNABORTED") {
+      console.error("Request timed out: ", error.message)
+    } else {
+      console.error("Error fetching events:", error)
+    }
+
     return {
       props: {
         events: [],
